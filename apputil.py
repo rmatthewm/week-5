@@ -13,16 +13,18 @@ def survival_demographics():
     # Choosing the last age as 200 to include all people 60+
     df['age_group'] = pd.cut(df['Age'], bins=[0,13,20,60,200], labels=['Child', 'Teen', 'Adult', 'Senior'])
 
-    # Add the number of passengers in that group
-    df['n_passengers'] = df.groupby(['Pclass', 'age_group', 'Sex'])['PassengerId'].transform('count')
+    # Since we only care about the statistics for each group, we can aggregate
+    # the data with the number of passengers and survivors
+    results_table = df.groupby(['Pclass', 'age_group', 'Sex'], observed=True).agg({'PassengerId': 'count', 'Survived': 'sum'})
 
-    # Add up the number of survivors in that group, we can use sum since survived is 0 or 1
-    df['n_survivors'] = df.groupby(['Pclass', 'age_group', 'Sex'])['Survived'].transform('sum')
+    # We can rename the columns to match the requirements
+    results_table = results_table.rename(columns={'PassengerId': 'n_passengers', 'Survived': 'n_survivors'})
 
-    # Add the survival rate
-    df['survival_rate'] = df['n_survivors'] / df['n_passengers']
+    # Calculate the survival rate
+    results_table['survival_rate'] = results_table['n_survivors'] / results_table['n_passengers']
 
-    return df[['Pclass', 'Sex', 'age_group', 'n_passengers', 'n_survivors', 'survival_rate']]
+    # Return the result sorted by survival rate
+    return results_table.sort_values('survival_rate', ascending=False)
 
 
-print(survival_demographics().head())
+print(survival_demographics())
