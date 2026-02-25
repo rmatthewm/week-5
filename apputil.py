@@ -73,7 +73,6 @@ def family_groups():
     # Sort the result by class and family size
     return results_table.sort_values(['Pclass', 'family_size'])
 
-
 def last_names():
     """ Returns a series with the count of each unique last name
 
@@ -85,5 +84,16 @@ def last_names():
     # Return the number of unique last names by getting the name before the comma
     return df['Name'].str.split(',').str[0].value_counts()
 
-print(family_groups()['family_size'].sum())
+def visualize_families():
+    df_family = family_groups()
+
+    return px.histogram(df_family, 
+             x='family_size', 
+             y='avg_fare',
+             histfunc='avg',
+             template='plotly_white',
+             color_discrete_sequence=px.colors.qualitative.D3
+            )
+
+print(family_groups()['family_size'])
 print(last_names())
