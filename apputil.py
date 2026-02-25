@@ -30,7 +30,14 @@ def survival_demographics():
     results_table = results_table.reset_index()
 
     # We can rename the columns to match the requirements
-    results_table = results_table.rename(columns={'PassengerId': 'n_passengers', 'Survived': 'n_survivors'})
+    # Note: correcting Pclass to pclass etc. to match test
+    results_table = results_table.rename(columns={
+        'PassengerId': 'n_passengers',
+        'Survived': 'n_survivors',
+        'Pclass': 'pclass',
+        'Age': 'age',
+        'Sex': 'sex'
+        })
 
     # Calculate the survival rate
     results_table['survival_rate'] = results_table['n_survivors'] / results_table['n_passengers']
@@ -73,8 +80,11 @@ def family_groups():
     # Reset the index
     results_table = results_table.reset_index()
 
+    # Rename Pclass to pclass to match test case
+    results_table = results_table.rename(columns={'Pclass': 'pclass'})
+
     # Sort the result by class and family size
-    return results_table.sort_values(['Pclass', 'family_size'])
+    return results_table.sort_values(['pclass', 'family_size'])
 
 def last_names():
     """ Returns a series with the count of each unique last name
