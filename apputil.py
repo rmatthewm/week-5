@@ -66,7 +66,7 @@ def family_groups():
 
     # Create a new aggregate dataframe grouped by class and family size
     # By doing the agg this way we can make separate columns based on Fare
-    results_table = df_family.groupby(['Pclass', 'family_size'], observed=True).agg(
+    results_table = df_family.groupby(['Pclass', 'family_size'], observed=False).agg(
         n_passengers=('PassengerId', 'count'), avg_fare=('Fare', 'mean'), 
         min_fare=('Fare', 'min'), max_fare=('Fare', 'max'))
 
