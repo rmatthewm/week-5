@@ -29,6 +29,8 @@ st.write(
 fig2 = visualize_families()
 st.plotly_chart(fig2, use_container_width=True)
 
+st.markdown('**')
+
 st.write(
 '''
 # Titanic Visualization Bonus
