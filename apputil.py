@@ -61,6 +61,9 @@ def family_groups():
     df_family = df.copy()
     df_family['family_size'] = df_family['SibSp'] + df_family['Parch'] + 1
 
+    # Print this just so we can compare it to last_names()
+    print(df_family.sort_values('family_size')['family_size'].value_counts())
+
     # Create a new aggregate dataframe grouped by class and family size
     # By doing the agg this way we can make separate columns based on Fare
     results_table = df_family.groupby(['Pclass', 'family_size'], observed=True).agg(
@@ -82,7 +85,7 @@ def last_names():
     global df
 
     # Return the number of unique last names by getting the name before the comma
-    return df['Name'].str.split(',').str[0].value_counts()
+    return df['Name'].str.split(',').str[0].value_counts().sort_values()
 
 def visualize_families():
     df_family = family_groups()
@@ -95,5 +98,8 @@ def visualize_families():
              color_discrete_sequence=px.colors.qualitative.D3
             )
 
-print(family_groups()['family_size'])
-print(last_names())
+# Run just to compare
+if __name__ == "__main__":
+    family_groups()
+    names = last_names()
+    print(names.value_counts())

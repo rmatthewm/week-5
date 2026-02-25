@@ -34,8 +34,16 @@ st.markdown("""*It seems that passengers with larger families may have had highe
 but to better confirm we would have to also look at how the family size relates to other
 factors such as class and age.*""")
 
-st.markdown('**')
+st.write("""
+For the comparison between the family_groups() and last_names(), I feel like they do not
+have a direct comparison because they are looking at different things. If I understand
+correctly, family_groups() is looking more at how the fare relates to family size, so had to modify it
+to get a direct comparison with last_names().
 
+However, estimating the number of families of different sizes by using unique last names seems
+to give a pretty similar result compared to the family_groups(). It also seems to be significantly more accurate
+for identifying individuals than for finding larger families.
+""")
 
 # st.write(
 # '''
