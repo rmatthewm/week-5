@@ -11,9 +11,14 @@ st.write(
 
 '''
 )
+
+st.write('Did seniors have a higher or lower survival rate than other age groups?')
+
 # Generate and display the figure
 fig1 = visualize_demographic()
 st.plotly_chart(fig1, use_container_width=True)
+st.markdown('*The answer seems to be that there is not a significant difference with seniors, as there is with children.*')
+
 
 st.write(
 '''
